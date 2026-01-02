@@ -16,11 +16,11 @@ mkdir -p $INSTALL_DIR
 
 BASE_URL="https://raw.githubusercontent.com/46Dimensions/PyTree/next"
 COMMAND_URL=$BASE_URL/command.sh
-MAIN_URL=$BASE_DIR/main.py
+MAIN_URL=$BASE_URL/main.py
 
 # Download files
 COMMAND_CONTENTS=$(curl -fsSL $COMMAND_URL) || { echo "Error downloading command script"; exit 1; }
-curl -fsSL $MAIN_URL -O $INSTALL_DIR/main.py || { echo "Error downloading main script"; exit 1; }
+curl -fsSL $MAIN_URL -o $INSTALL_DIR/main.py || { echo "Error downloading main script"; exit 1; }
 
 echo "Configuring files..."
 
