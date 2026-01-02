@@ -10,11 +10,11 @@ if [ "$SILENT" -eq 1 ]; then
   exec >/dev/null
 fi
 
-$INSTALL_DIR=$PWD
+INSTALL_DIR=$PWD
 echo "Creating directory at ${INSTALL_DIR}"
 mkdir -p $INSTALL_DIR
 
-BASE_URL="https://raw.githubusercontent.com/46Dimensions/PyTree/main"
+BASE_URL="https://raw.githubusercontent.com/46Dimensions/PyTree/next"
 COMMAND_URL=$BASE_URL/command.sh
 MAIN_URL=$BASE_DIR/main.py
 
