@@ -15,6 +15,7 @@ args = parser.parse_args()
 start_dir = args.directory
 output_file = args.output
 recursive = args.recursive
+all = args.all
 use_colours = output_file is None
 
 dirs_searched = 0
@@ -96,6 +97,8 @@ def add_dir(dir: str, tree: dict|None = None, return_dirs: bool = False) -> tupl
     dirs = []
 
     for entry in entries:
+        if not all and entry.name.startswith("."):
+            continue
         try:
             if entry.is_file(follow_symlinks=False):
                 files.append(entry.path)
@@ -111,7 +114,6 @@ def add_dir(dir: str, tree: dict|None = None, return_dirs: bool = False) -> tupl
     tree[dir] = files
     for d in dirs:
         tree[d] = []
-
 
     if return_dirs:
         return tree, dirs
