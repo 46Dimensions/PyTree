@@ -25,20 +25,21 @@ curl -fsSL $MAIN_URL -o $INSTALL_DIR/main.py || { echo "Error downloading main s
 echo "Configuring files..."
 
 write_script_with_install_dir() {
-  contents=$1
-  out=$2
+    contents=$1
+    out=$2
 
-  printf '%s\n' "$contents" | awk -v install_dir="$INSTALL_DIR" '
-    NR == 1 { print; next }
-    NR == 2 && $0 ~ /^set -e/ {
-      print
-      print ""
-      print "INSTALL_DIR=\"" install_dir "\""
-      print ""
-      next
-    }
-    { print }
-  ' > "$out"
+
+    printf '%s\n' "$contents" | awk -v install_dir="$INSTALL_DIR" '
+        NR == 1 { print; next }
+        NR == 2 && $0 ~ /^set -e/ {
+        print
+        print ""
+        print "INSTALL_DIR=\"" install_dir "\""
+        print ""
+        next
+        }
+        { print }
+    ' > "$out"
 
   chmod +x "$out"
 }
