@@ -1,8 +1,9 @@
-import time
-START = time.perf_counter()
 import argparse
-import os
 import stat
+import time
+import os
+
+START = time.perf_counter()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("directory", type=str, help="Path to be used by TreeList (treels)")
