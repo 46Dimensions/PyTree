@@ -10,7 +10,7 @@ if [ "$SILENT" -eq 1 ]; then
   exec >/dev/null
 fi
 
-INSTALL_DIR=$PWD
+INSTALL_DIR=$PWD/PyTree
 echo "Creating directory at ${INSTALL_DIR}"
 mkdir -p $INSTALL_DIR
 
@@ -19,8 +19,8 @@ COMMAND_URL=$BASE_URL/command.sh
 MAIN_URL=$BASE_DIR/main.py
 
 # Download files
-curl -fsSL $COMMAND_URL -o $HOME/.local/bin/pytree || { echo "Error downloading command script"; exit 1; }
-MAIN_CONTENTS=$(curl -fsSL $COMMAND_URL) || { echo "Error downloading main script"; exit 1; }
+COMMAND_CONTENTS=$(curl -fsSL $COMMAND_URL) || { echo "Error downloading command script"; exit 1; }
+curl -fsSL $MAIN_URL -O $INSTALL_DIR/main.py || { echo "Error downloading main script"; exit 1; }
 
 echo "Configuring files..."
 
@@ -43,6 +43,6 @@ write_script_with_install_dir() {
   chmod +x "$out"
 }
 
-write_script_with_install_dir "$MAIN_CONTENTS" "$INSTALL_DIR/main.py"
+write_script_with_install_dir "$COMMAND_CONTENTS" "$HOME/.local/bin/pytree"
 
 echo "PyTree version 1.0.0 installed successfully"
