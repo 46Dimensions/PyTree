@@ -19,8 +19,8 @@ COMMAND_URL=$BASE_URL/command.sh
 MAIN_URL=$BASE_DIR/main.py
 
 # Download files
-curl -fsSL $COMMAND_URL -o $HOME/.local/bin/pytree
-MAIN_CONTENTS=$(curl -fsSL $COMMAND_URL)
+curl -fsSL $COMMAND_URL -o $HOME/.local/bin/pytree || { echo "Error downloading command script"; exit 1; }
+MAIN_CONTENTS=$(curl -fsSL $COMMAND_URL) || { echo "Error downloading main script"; exit 1; }
 
 echo "Configuring files..."
 
