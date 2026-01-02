@@ -28,16 +28,16 @@ VERTICAL_LINE = "│"
 HORIZONTAL_LINE = "─"
 
 # ANSI color codes (similar to ls)
-class colours:
+class Colours:
     if use_colours:
-        RESET = "\033[0m"
+        RESET = "\033[0m"        # Reset the colours
         BLUE = "\033[1;94m"      # Directories
-        GREEN = "\033[92m"     # Executables
-        CYAN = "\033[96m"      # Symlinks
+        GREEN = "\033[92m"       # Executables
+        CYAN = "\033[96m"        # Symlinks
         RED = "\033[1;91m"       # Archives
-        YELLOW = "\033[93m"    # Special files
+        YELLOW = "\033[93m"      # Special files
         MAGENTA = "\033[1;95m"   # Images
-        WHITE = ""     # Default - works in white-backround terminals
+        WHITE = ""               # Default - works in white-background terminals
     else:
         # No colours if colours are disabled
         RESET = ""
@@ -58,26 +58,26 @@ def get_color_for_path(path: str) -> str:
         if os.path.islink(path):
             # Check if symlink is broken
             if os.path.exists(path):
-                return colours.CYAN  # Valid symlink
+                return Colours.CYAN  # Valid symlink
             else:
-                return colours.RED   # Broken symlink
+                return Colours.RED   # Broken symlink
         elif os.path.isdir(path):
-            return colours.BLUE     # Directory
+            return Colours.BLUE     # Directory
         else:
             # Check if executable
             st = os.stat(path)
             if st.st_mode & stat.S_IXUSR:
-                return colours.GREEN  # Executable
+                return Colours.GREEN  # Executable
             # Check file extension for archives/images
             ext = os.path.splitext(path)[1].lower()
             if ext in ['.zip', '.tar', '.gz', '.bz2', '.rar', '.7z']:
-                return colours.RED    # Archive
+                return Colours.RED    # Archive
             elif ext in ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg']:
-                return colours.MAGENTA  # Image
+                return Colours.MAGENTA  # Image
             else:
-                return colours.WHITE  # Regular file
+                return Colours.WHITE  # Regular file
     except Exception:
-        return colours.WHITE if use_colours else ""
+        return Colours.WHITE if use_colours else ""
 
 def add_dir(dir: str, tree: dict|None = None, return_dirs: bool = False) -> tuple[dict, list]|dict:
     global dirs_searched, skipped, files_found, dirs_found
@@ -189,7 +189,7 @@ def format_tree(paths: list[str]) -> str:
             # Build full path for color determination
             full_path = os.path.join(parent_path, name)
             color = get_color_for_path(full_path)
-            colored_name = f"{color}{name}{colours.RESET}"
+            colored_name = f"{color}{name}{Colours.RESET}"
             
             lines.append(prefix + connector + colored_name)
 
@@ -202,7 +202,7 @@ def format_tree(paths: list[str]) -> str:
     # Add root without connector
     for root_path, children in tree.items():
         color = get_color_for_path(root_path)
-        colored_root = f"{color}{root_path}{colours.RESET}"
+        colored_root = f"{color}{root_path}{Colours.RESET}"
         lines.append(colored_root)
         
         children = dict(children)
@@ -211,7 +211,7 @@ def format_tree(paths: list[str]) -> str:
             is_last = idx == (len(sorted_children) - 1)
             full_path = os.path.join(root_path, name)
             color = get_color_for_path(full_path)
-            colored_name = f"{color}{name}{colours.RESET}"
+            colored_name = f"{color}{name}{Colours.RESET}"
             
             connector = FINAL_BRANCH if is_last else BRANCH
             lines.append("   " + connector + colored_name)
