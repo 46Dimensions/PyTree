@@ -6,7 +6,7 @@ import os
 START = time.perf_counter()
 
 parser = argparse.ArgumentParser()
-parser.add_argument("directory", type=str, help="Path to be used by TreeList (treels)")
+parser.add_argument("directory", type=str, help="Path to the directory be searched")
 parser.add_argument("-o", "--output", type=str, help="Output file path", default=None)
 parser.add_argument("-r", "--recursive", action="store_true", help="Search subdirectories")
 parser.add_argument("-a", "--all", action="store_true", help="Show files starting with .")
