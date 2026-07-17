@@ -1,7 +1,7 @@
 # PyTree
 
 A Python version of the `tree` command.
-Shows the files in the current directory in a tree-like format.
+Shows the files in the specified directory in a tree-like format.
 
 ## How to use
 
